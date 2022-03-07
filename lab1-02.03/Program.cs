@@ -2,19 +2,6 @@
 
 namespace lab1_02._03
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            CarProperties carProperties = CarProperties.of("BMWE");
-
-
-
-            Console.WriteLine(carProperties.BrandName);
-        }
-    }
-
-    
 
     public class CarProperties
     {
@@ -29,14 +16,10 @@ namespace lab1_02._03
 
         public static CarProperties of(string firstName)
         {
-            if (firstName.Length <=2)
-            {
+
                 return new CarProperties(firstName);
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("Nazwa jest za krotka");
-            }
+            
+          
         }
 
         public string BrandName
@@ -63,6 +46,8 @@ namespace lab1_02._03
         Euro = 3,
     }
 
+
+
     public class Money
     {
         private readonly decimal _value;
@@ -73,33 +58,75 @@ namespace lab1_02._03
             _value = value;
             _currency = currency; 
         }
+        public decimal Value
+        {
+            get { return _value; }
+        }
+        public Currency Currency
+        {
+            get { return _currency; }
+        }
+
         public static Money Of(decimal value, Currency currency)
         {
                 return value < 0 ? null : new Money(value, currency);
 
         }
 
-        public static Money? OfWhiteException(decimal value, Currency currency)
-        {
-            if (value < 0 )
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-            else
-            {
-                return  new Money(value, currency); 
-            }
-        }
-
         public static Money operator*(Money money, decimal value)
         {
-            return Money.Of(money._value * value, money._currency);
+            return Money.Of(money.Value * value, money.Currency);
         }
         public static Money operator *(decimal value, Money money)
         {
             return Money.Of(money._value * value, money._currency);
         }
+
+        public static Money? OfWhiteException(decimal value, Currency currency)
+        {
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else
+            {
+                return new Money(value, currency);
+            }
+        }
+        public static Money? ParseValue(string valueStr, Currency currency)
+        {
+            decimal parsedValue;
+            bool done = decimal.TryParse(valueStr, out parsedValue);
+            if (done)
+            {
+                //return new Money(parsedValue, currency);
+                return Money.Of(parsedValue,currency);
+            }
+            else
+            {
+                throw new ArgumentException("wrong argumnet");
+            }
+            
+        }
+        
+
     }
 
-    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            CarProperties carProperties = CarProperties.of("BMWEE");
+
+
+            Money money = Money.ParseValue("13,45", Currency.PLN);
+            Money money1 = Money.Of(100m, Currency.PLN);
+            var res = money1 * 0.25m;
+            Console.WriteLine(res.Value.ToString(), money1.Currency);
+
+            Console.WriteLine(carProperties.BrandName);
+        }
+    }
+
+
 }
