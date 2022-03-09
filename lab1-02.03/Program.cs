@@ -232,11 +232,20 @@ namespace lab1_02._03
         public string Name { get; set; }    
         public int CompareTo(Student other)
         {
-            //compare to ETCS
-            //compare to name
+            if (ReferenceEquals(this, other)) return 0;
+            if  (ReferenceEquals(null, other)) return 1;
+            var studentsCompare = Ects.CompareTo(other.Ects);
+            if (studentsCompare != 0) return studentsCompare;
+            return Ects.CompareTo(other.Name);
         }
     }
-
+    static class StringExt
+    {
+        public static String Double(this String instance)
+        {
+            return instance + instance;
+        }
+    }
     class Program
     {
         static void Main(string[] args)
@@ -256,10 +265,12 @@ namespace lab1_02._03
 
             Student[] students =
             {
-                new Student(){Ects=10,Name="a"},
+               
+                new Student(){Ects=1,Name="d"},
                  new Student(){Ects=45,Name="b"},
+                  new Student(){Ects=10,Name="a"},
                   new Student(){Ects=3,Name="c"},
-                   new Student(){Ects=1,Name="d"},
+                   
                     new Student(){Ects=90,Name="e"}
 
             };
@@ -268,6 +279,7 @@ namespace lab1_02._03
             {
                 Console.WriteLine(item.Name+" "+ item.Ects);
             }
+            Console.WriteLine("abcd".Double());
         }
     }
 
