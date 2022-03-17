@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace lab1_02._03
@@ -226,17 +226,20 @@ namespace lab1_02._03
         }
     }
 
-    class Student:IComparable<Student>
+    class Student : IComparable<Student>
     {
-        public int Ects { get; set; }
-        public string Name { get; set; }    
+
+
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public double Srednia { get; set; }
         public int CompareTo(Student other)
         {
             if (ReferenceEquals(this, other)) return 0;
-            if  (ReferenceEquals(null, other)) return 1;
-            var studentsCompare = Ects.CompareTo(other.Ects);
+            if (ReferenceEquals(null, other)) return 1;
+            var studentsCompare = Name.CompareTo(other.Name);
             if (studentsCompare != 0) return studentsCompare;
-            return Ects.CompareTo(other.Name);
+            return Name.CompareTo(other.Srednia);
         }
     }
     static class StringExt
@@ -246,6 +249,21 @@ namespace lab1_02._03
             return instance + instance;
         }
     }
+
+  public static class MoneyExtension
+    {
+        public static Money ToCurency(this Money money,Currency currency,decimal kurs)
+        {
+            if (currency==money.Currency)
+            {
+                new ArgumentException("Nie można konwertowac tej samej waluty");
+
+            }
+
+            return Money.Of(money.Value * kurs,money.Currency);
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -265,21 +283,35 @@ namespace lab1_02._03
 
             Student[] students =
             {
-               
-                new Student(){Ects=1,Name="d"},
-                 new Student(){Ects=45,Name="b"},
-                  new Student(){Ects=10,Name="a"},
-                  new Student(){Ects=3,Name="c"},
-                   
-                    new Student(){Ects=90,Name="e"}
+
+                new Student(){Name="Mateusz",Surname="Nosel", Srednia=5.0},
+                 new Student(){Name="Kacper",Surname="Puzio", Srednia=4.0},
+                  new Student(){Name="Maciek",Surname="Misiak", Srednia=3.2},
+                  new Student(){Name="Jurand",Surname="Juri", Srednia=5.0},
+
+
 
             };
             Array.Sort(students);
+            Console.WriteLine();
+            Console.WriteLine("Sortowanie po Name: ");
+            Console.WriteLine();
             foreach (var item in students)
             {
-                Console.WriteLine(item.Name+" "+ item.Ects);
+                Console.WriteLine(item.Name + " " + item.Surname + " " + item.Srednia);
             }
+            Console.WriteLine();
             Console.WriteLine("abcd".Double());
+            Console.WriteLine();
+
+            money = Money.Of(100, Currency.PLN);
+            var res2 = money.ToCurency(Currency.USD, 4.1m);
+            Console.WriteLine(res2);
+
+
+            money = Money.Of(50, Currency.PLN);
+            var res3 = money.ToCurency(Currency.PLN, 4.1m);
+            Console.WriteLine(res3);
         }
     }
 
