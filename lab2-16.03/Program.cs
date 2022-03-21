@@ -43,16 +43,40 @@ IFlyable[] flyingObject =
     new Wasp(){Name="Osa",Size="Mala"},
     new Hydroplane(){Name="Samolot",Size="Duzy"}
 };
-IAggregate aggregate = new SimpleAggregate();
+
+int latajuchy = 0;
+foreach (var item in flyingObject)
+{
+    if (item is IFlyable && item is ISwimmingable)
+    {
+        latajuchy++;
+    }
+}
+Console.WriteLine($"Jest {latajuchy} obiektów które posiadają zaimplementowane dwa interfejsy ");
+
+
+/*IAggregate aggregate = new SimpleAggregate();
 IIterator iterator = aggregate.CreateIterator();
 
 IAggregate aggregate1 = new CovertSimpleAggregate();
-IIterator iterator1 = aggregate1.CreateIterator();
-
-while (iterator.HasNext())
+IIterator iterator1 = aggregate1.CreateIterator();*/
+Console.WriteLine();
+Console.WriteLine("Cwiczenie 3");
+Aggregate aggregate = new ArrayIntAggregate();
+Aggregate aggregate2 = new ReverseArrayIntAggregate();
+for (var iterator = aggregate.CreateIterator(); iterator.HasNext();)
 {
     Console.WriteLine(iterator.GetNext());
 }
+Console.WriteLine();
+for(var iterator = aggregate2.CreateIterator(); iterator.HasNext();)
+{
+    Console.WriteLine(iterator.GetNext());
+}
+/*while (iterator.HasNext())
+{
+    Console.WriteLine(iterator.GetNext());
+}*/
 Console.WriteLine();
 //------------------------------------------------------------------------------------------------------
 
@@ -93,6 +117,7 @@ public abstract class Vehicle
     public abstract decimal Drive(int distance);
     public abstract decimal ChargeBatteries();
 
+
     public override string ToString()
     {
         return $"Vehicle{{ Weight: {Weight}, MaxSpeed: {MaxSpeed}, Mileage: {_mileage} }}";
@@ -100,7 +125,6 @@ public abstract class Vehicle
 }
 public abstract class Scooter : Vehicle
 {
-
 }
 
 public class ElectricScooter : Scooter
@@ -158,7 +182,80 @@ public class ElectricScooter : Scooter
 //Koniec cwiczen
 
 
-interface IAggregate
+
+public abstract class Aggregate
+{
+    public abstract Iterator CreateIterator();
+}
+public abstract class Iterator
+{
+    public abstract int GetNext();
+    public abstract bool HasNext();
+}
+public class ArrayIntAggregate : Aggregate
+{
+    internal int[] array = { 1, 2, 3, 4, 5 };
+
+    public override Iterator CreateIterator()
+    {
+        return new ArrayIntIterator(this);
+    }
+}
+
+public sealed class ArrayIntIterator : Iterator
+{
+    private int _index = 0;
+    private ArrayIntAggregate _aggregate;
+    public ArrayIntIterator(ArrayIntAggregate aggregate)
+    {
+        _aggregate = aggregate;
+    }
+    public override int GetNext()
+    {
+        return _aggregate.array[_index++];
+    }
+    public override bool HasNext()
+    {
+        return _index < _aggregate.array.Length;
+    }
+}
+
+public class ReverseArrayIntAggregate : Aggregate
+{
+    internal int[] array2 = { 1, 2, 3, 4, 5 };
+
+    public override Iterator CreateIterator()
+    {
+        return new ReverseArrayIntIterator(this);
+    }
+}
+
+public sealed class ReverseArrayIntIterator : Iterator
+{
+    private int _index2 = 0;
+    private ReverseArrayIntAggregate _aggregate2;
+    public ReverseArrayIntIterator(ReverseArrayIntAggregate aggregate2)
+    {
+        _aggregate2 = aggregate2;
+    }
+    
+    public override int GetNext()
+    {
+        int[] reverseArray = new int[_aggregate2.array2.Length];
+        for (int i = 0; i < _aggregate2.array2.Length; i++)
+        {
+            reverseArray[i] = _aggregate2.array2[_aggregate2.array2.Length-1-i];
+        }
+        return reverseArray[_index2++];
+    }
+    public override bool HasNext()
+    {
+        return _index2 < _aggregate2.array2.Length;
+    }
+}
+
+
+/*interface IAggregate
 {
     IIterator CreateIterator();
 }
@@ -167,8 +264,8 @@ interface IIterator
     bool HasNext();
     int GetNext();
 }
-
-class SimpleAggregate : IAggregate
+*/
+/*class SimpleAggregate : IAggregate
 {
     internal int a = 5;
     internal int b = 9;
@@ -177,9 +274,10 @@ class SimpleAggregate : IAggregate
     {
         return new SimpleAggregateIterator(this);
     }
-}
+}*/
 
-class CovertSimpleAggregate : IAggregate
+
+/*class CovertSimpleAggregate : IAggregate
 {
     internal int c = 10;
     internal int b = 9;
@@ -191,8 +289,8 @@ class CovertSimpleAggregate : IAggregate
     {
         return new CovertSimpleAggregateIterator(this);
     }
-}
-class CovertSimpleAggregateIterator : IIterator
+}*/
+/*class CovertSimpleAggregateIterator : IIterator
 {
     private CovertSimpleAggregate _convertaggregate;
     private int count = 0;
@@ -251,7 +349,7 @@ class SimpleAggregateIterator : IIterator
     {
         return count < 3;
     }
-}
+}*/
 
 class EmailMessage : AbstractMessage
 {
