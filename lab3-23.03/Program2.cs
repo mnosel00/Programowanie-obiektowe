@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 class App
 {
@@ -19,7 +20,7 @@ interface IPlay
     string Play();
 }
 
-class Musician<T>where T: Instrument, IPlay
+class Musician<T> where T : Instrument, IPlay
 {
     public T Instrument { get; init; }
 
@@ -84,23 +85,23 @@ public class Exercise2
     //var tuple = GetTuple2<int>(arr);
     //tuple.firstAndLast    ==> {2, 6}
     //tuple.isSame          ==> false
-  /*  public void firstAndLast()
-    {
+    /*  public void firstAndLast()
+      {
 
-    }
-    public bool isSame(tuple)
-    {
+      }
+      public bool isSame(tuple)
+      {
 
-    }*/
+      }*/
     public static ValueTuple<T[], bool> GetTuple2<T>(T[] arr)
     {
-        
-        //int[] NewArr ={ 2, 3, 4, 6 };
-        
-        var last = arr[arr.Length - 1];
-       var first = arr[0];
 
-        T[] firstAndLast = {first, last};
+        //int[] NewArr ={ 2, 3, 4, 6 };
+
+        var last = arr[arr.Length - 1];
+        var first = arr[0];
+
+        T[] firstAndLast = { first, last };
         /*bool rownoc = false;
 
         if (fi)
@@ -108,7 +109,7 @@ public class Exercise2
 
         }*/
 
-            
+
 
         var tuple = GetTuple2<T>(arr);
         tuple = (firstAndLast, arr == firstAndLast);
@@ -117,7 +118,7 @@ public class Exercise2
 
 
         return tuple;
-        
+
     }
 }
 
@@ -136,27 +137,37 @@ public class Exercise3
     //W obu tablicach moga pojawić się wartości null, które też muszą być zliczane
     public static (T, int)[] countElements<T>(T[] arr, params T[] elements)
     {
-  
+
 
         var tuple = countElements(arr, elements);
 
-        var dic = new Dictionary<T, int>();
-        foreach (var element in arr)
-        {
-            if (dic.ContainsKey(element)) 
-            {
-                dic[element]++;
+        // var dic = new Dictionary<T, int>();
+        int count = 0;
 
-            }
-            else
-            {
-                dic[element] = 1;
-            }
-        }
-        foreach(var pair in dic)
+        
+        foreach (var item in elements)
         {
-            tuple = (pair.Key, pair.Value);
+            /*if (arr.Contains(item))
+            {
+                count++;
+            }*/
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (EqualityComparer<T>.Default.Equals(item,arr[i]))
+                {
+                    count++;
+                }
+            }
+            tuple = new[] { (item, count) };
+            count=0;
         }
+        
+        return tuple;
+
+
+
+
+
     }
 }
 
