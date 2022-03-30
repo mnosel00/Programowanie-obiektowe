@@ -157,17 +157,17 @@ class Exercise3
         string[] array = new string[cars.Length];
 
 
-        var dic = new Dictionary<string, int>();
+        var dic = new Dictionary<object, int>();
         foreach (var item in cars)
         {
-            if (dic.ContainsKey(item.Model))
+            if (dic.ContainsKey(item))
             {
-                dic[item.Model]++;
+                dic[item]++;
 
             }
             else
             {
-                dic[item.Model] = 1;
+                dic[item] = 1;
             }
         }
        
