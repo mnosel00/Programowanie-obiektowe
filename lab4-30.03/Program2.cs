@@ -1,15 +1,20 @@
 ﻿using System.Diagnostics.Tracing;
 using System.Drawing;
+using System.Linq;
 
-class App
+class App: Exercise1
 {
     public static void Main(string[] args)
     {
-        
+        (int, int) point1 = (0, 0);
+        (int, int) scren = (4, 4);
+        Direction4 dir = Direction4.UP;
+        var point2 = NextPoint(dir, point1,scren);
+        Console.WriteLine(point2);
     }
 }
 
-enum Direction4
+enum Direction8
 {
     UP,
     DOWN,
@@ -21,7 +26,7 @@ enum Direction4
     DOWN_RIGHT
 }
 
-enum Direction8
+enum Direction4
 {
     UP,
     DOWN,
@@ -44,7 +49,36 @@ class Exercise1
 {
     public static (int, int) NextPoint(Direction4 direction, (int, int) point, (int, int) screenSize)
     {
-        throw new NotImplementedException();
+
+        var tuple = point;
+        int a = tuple.Item1;
+        int b = tuple.Item2;
+        if (direction==Direction4.UP && b==0)
+        {
+            return tuple;
+
+        }else if (direction==Direction4.LEFT && a == 0)
+        {
+            return tuple;
+        }
+        else
+        {
+            return direction switch
+            {
+
+                Direction4.UP => point = (a, b - 1),
+                Direction4.DOWN => point = (a, b + 1),
+                Direction4.LEFT => point = (a - 1, b),
+                Direction4.RIGHT => point = (a + 1, b)
+
+            };
+        }
+        //point(2,4)
+        
+
+
+
+
     }
 }
 //Cwiczenie 2
@@ -71,10 +105,10 @@ class Exercise2
     };
 
     private static (int, int) point = (1, 1);
-    
+
     private Direction8 direction = DirectionTo(screen, point, 1);
-    
-    public static Direction8 DirectionTo(int[,] screen, (int, int) point,  int value)
+
+    public static Direction8 DirectionTo(int[,] screen, (int, int) point, int value)
     {
         throw new NotImplementedException();
     }
@@ -101,7 +135,18 @@ class Exercise3
 {
     public static int CarCounter(Car[] cars)
     {
-        throw new NotImplementedException();
+        int count = 0;
+        foreach (var item in cars)
+        {
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (cars[i].Model == item.Model)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
 
@@ -123,6 +168,7 @@ class Exercise4
 {
     public static void AssignStudentId(Student[] students)
     {
-        
+
+
     }
 }
