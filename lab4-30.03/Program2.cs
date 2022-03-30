@@ -2,15 +2,33 @@
 using System.Drawing;
 using System.Linq;
 
-class App: Exercise1
+class App: Exercise3
 {
     public static void Main(string[] args)
     {
+       /* Console.WriteLine("Cwiczenie 1");
         (int, int) point1 = (0, 0);
         (int, int) scren = (4, 4);
         Direction4 dir = Direction4.UP;
         var point2 = NextPoint(dir, point1,scren);
         Console.WriteLine(point2);
+        Console.WriteLine();
+
+        Console.WriteLine("Cwiczenie 3");*/
+
+         Car[] _cars = new Car[]
+         {
+             new Car(),
+             new Car(Model: "Fiat", true),
+             new Car(),
+             new Car(Power: 100),
+             new Car(Model: "Fiat", true),
+             new Car(Power: 125),
+             new Car()
+         };
+        Console.WriteLine(CarCounter(_cars)); 
+
+
     }
 }
 
@@ -136,17 +154,24 @@ class Exercise3
     public static int CarCounter(Car[] cars)
     {
         int count = 0;
+        string[] array = new string[cars.Length];
+
+
+        var dic = new Dictionary<string, int>();
         foreach (var item in cars)
         {
-            for (int i = 0; i < cars.Length; i++)
+            if (dic.ContainsKey(item.Model))
             {
-                if (cars[i].Model == item.Model)
-                {
-                    count++;
-                }
+                dic[item.Model]++;
+
+            }
+            else
+            {
+                dic[item.Model] = 1;
             }
         }
-        return count;
+       
+        return dic.Values.Max();
     }
 }
 
