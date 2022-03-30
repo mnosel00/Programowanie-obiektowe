@@ -2,21 +2,21 @@
 using System.Drawing;
 using System.Linq;
 
-class App: Exercise3
+class App : Exercise4
 {
     public static void Main(string[] args)
     {
-       /* Console.WriteLine("Cwiczenie 1");
-        (int, int) point1 = (0, 0);
-        (int, int) scren = (4, 4);
-        Direction4 dir = Direction4.UP;
-        var point2 = NextPoint(dir, point1,scren);
-        Console.WriteLine(point2);
-        Console.WriteLine();
+        /* Console.WriteLine("Cwiczenie 1");
+         (int, int) point1 = (0, 0);
+         (int, int) scren = (4, 4);
+         Direction4 dir = Direction4.UP;
+         var point2 = NextPoint(dir, point1,scren);
+         Console.WriteLine(point2);
+         Console.WriteLine();
 
-        Console.WriteLine("Cwiczenie 3");*/
+         Console.WriteLine("Cwiczenie 3");*/
 
-         Car[] _cars = new Car[]
+        /* Car[] _cars = new Car[]
          {
              new Car(),
              new Car(Model: "Fiat", true),
@@ -26,7 +26,23 @@ class App: Exercise3
              new Car(Power: 125),
              new Car()
          };
-        Console.WriteLine(CarCounter(_cars)); 
+        Console.WriteLine(CarCounter(_cars)); */
+
+
+        /*Student[] students = {
+          new Student("Kowal","Adam", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+          new Student("Nowak","Ewa", 'A'),
+            new Student("Nowak","Ewa", 'A')
+        };
+         AssignStudentId(students);*/
 
 
     }
@@ -71,11 +87,12 @@ class Exercise1
         var tuple = point;
         int a = tuple.Item1;
         int b = tuple.Item2;
-        if (direction==Direction4.UP && b==0)
+        if (direction == Direction4.UP && b == 0)
         {
             return tuple;
 
-        }else if (direction==Direction4.LEFT && a == 0)
+        }
+        else if (direction == Direction4.LEFT && a == 0)
         {
             return tuple;
         }
@@ -92,7 +109,7 @@ class Exercise1
             };
         }
         //point(2,4)
-        
+
 
 
 
@@ -170,7 +187,7 @@ class Exercise3
                 dic[item] = 1;
             }
         }
-       
+
         return dic.Values.Max();
     }
 }
@@ -193,7 +210,64 @@ class Exercise4
 {
     public static void AssignStudentId(Student[] students)
     {
+        int count = 0;
+        int countB = 0;
+        int countC = 0;
 
 
+        foreach (var item in students)
+        {
+           string grupa = item.Group.ToString();
+            if (grupa == "A")
+            {
+                count++;
+                
+                if (count<=9)
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}00{count}'");
+                }else if(count>=10&&count<=99)
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}0{count}'");
+                }
+                else
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}{count}'");
+                }
+            }
+            else if (grupa == "B")
+            {
+                countB++;
+
+                if (countB <= 9)
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}00{countB}'");
+                }
+                else if (countB >= 10 && countB <= 99)
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}0{countB}'");
+                }
+                else
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}{countB}'");
+                }
+            }
+            else
+            {
+                countC++;
+
+                if (countC <= 9)
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}00{countC}'");
+                }
+                else if (countC >= 10 && countC <= 99)
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}0{countC}'");
+                }
+                else
+                {
+                    Console.WriteLine($"{item.LastName} {item.FirstName} '{item.Group}' - '{item.Group}{countC}'");
+                }
+            }
+        }
     }
 }
