@@ -163,7 +163,7 @@ class Exercise3: IEnumerable<string>
         string hexValue = decValue.ToString("X").PadLeft(digitCount, '0');
 
 
-        while (hexValue.Distinct().Count() == 1)
+        while (hexValue==)
         {
             decValue++;
             
