@@ -159,13 +159,15 @@ class Exercise3: IEnumerable<string>
 
         List<string> list = new List<string>();
 
-        decimal decValue = 1;
+        decimal decValue = 0;
         string hexValue = decValue.ToString("X").PadLeft(digitCount, '0');
+        list.Add(hexValue);
 
 
-        while (hexValue==)
+        while (hexValue=="ffff")
         {
             decValue++;
+            list.Add(decValue.ToString("X"));
             
         }
 
