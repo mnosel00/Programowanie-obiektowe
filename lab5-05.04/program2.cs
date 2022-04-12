@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-class App 
+class App
 {
     public static void Main(string[] args)
-     {
+    {
         Exercise1<string> names = new Exercise1<string>() { Manager = "Adam", MemberA = "Ola", MemberB = "Ewa" };
         foreach (var i in names)
         {
@@ -16,8 +16,14 @@ class App
         rates[Currency.EUR] = 4.6m;
         Console.WriteLine(rates[Currency.EUR]);
 
+         var limitedHex = hex.GetLimitedHex(4);
+        while (limitedHex.MoveNext())
+         {
+             Console.WriteLine(limitedHex.Current);
+         }
 
-        
+
+
     }
 
 
@@ -83,31 +89,31 @@ enum Currency
 
 class CurrencyRates
 {
-   
+
     //utwórz tablicę o rozmiarze równym liczbie stalych wyliczeniowych Currency
     private decimal[] _rates = new decimal[Enum.GetValues<Currency>().Length];
-    public decimal this[Currency c ]
+    public decimal this[Currency c]
     {
         get
         {
             switch (c)
             {
-                
+
                 case Currency.USD: return _rates[1];
                 case Currency.EUR: return _rates[2];
                 case Currency.CHF: return _rates[3];
-                    default: return _rates[0];
+                default: return _rates[0];
             }
         }
         set
         {
-           switch (c)
+            switch (c)
             {
                 case Currency.USD: _rates[1] = value; break;
                 case Currency.EUR: _rates[2] = value; break;
                 case Currency.CHF: _rates[3] = value; break;
                 default: _rates[0] = value; break;
-                    
+
 
             }
         }
@@ -141,11 +147,18 @@ class CurrencyRates
 //...
 //0xffff
 
-class Exercise3: IEnumerable<string>
+class Exercise3 : IEnumerable<string>
 {
     public IEnumerator<string> GetEnumerator()
     {
-        throw new NotImplementedException();
+        foreach (var item in lista)
+        {
+            if (item != null)
+            {
+                yield return item;
+            }
+        }
+       
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -155,23 +168,39 @@ class Exercise3: IEnumerable<string>
 
     public IEnumerator<string> GetLimitedHex(int digitCount)
     {
-        //List<T> list = new List<T>();
+        List<string> lista = new List<string>();
 
-        List<string> list = new List<string>();
+        decimal decvalue = 0;
+        string hex = "";
 
-        decimal decValue = 0;
-        string hexValue = decValue.ToString("X").PadLeft(digitCount, '0');
-        list.Add(hexValue);
-
-
-        while (hexValue=="ffff")
+        while (hex != "ffff")
         {
-            decValue++;
-            list.Add(decValue.ToString("X"));
-            
+            decvalue++;
+            hex = decvalue.ToString().PadLeft(digitCount, '0');
+            lista.Add(hex);
+        }
+        return lista.GetEnumerator();
+       
+/*
+        int index = -1;
+        bool MoveNext()
+        {
+            index++;
+            while (index < lista.Count && lista[index] == null)
+            {
+                index++;
+            }
+            return index < lista.Count;
         }
 
-        throw new NotImplementedException();
+        string Current()
+        {
+            return lista[index];
+        }
+     
+      
+
+        throw new NotImplementedException();*/
 
 
     }
@@ -212,7 +241,7 @@ enum ChessColor
 }
 class Exercise4
 {
-    private (ChessPiece, ChessColor) [,] _board = new(ChessPiece, ChessColor)[8, 8];
+    private (ChessPiece, ChessColor)[,] _board = new (ChessPiece, ChessColor)[8, 8];
 }
 
 class InvalidChessPieceCount : Exception
@@ -222,5 +251,5 @@ class InvalidChessPieceCount : Exception
 
 class InvalidChessBoardCoordinates : Exception
 {
-    
+
 }
