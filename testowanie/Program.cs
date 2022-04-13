@@ -1,75 +1,64 @@
-﻿Degree degree = Degree.A;
-Console.WriteLine((int)degree);
-Console.WriteLine((int)Degree.B);
-Console.WriteLine(degree);
-Console.WriteLine();
-string[] names = Enum.GetNames<Degree>();
+﻿using System.Collections.Generic;
+using System;
 
-Degree[] degrees = Enum.GetValues<Degree>();
-
-Array.Sort(degrees, (a,b) => -a.CompareTo(b));
-
-Console.WriteLine("Wpisz jedna z ocen");
-
-foreach (var item in degrees)
+namespace test
 {
-    Console.WriteLine(item);
-}
-
-string degreeString = Console.ReadLine();
-
-try
-{
-    Degree studentDegree = Enum.Parse<Degree>(degreeString);
-    Console.WriteLine($"Wpisales ocene {studentDegree}");
-    Console.WriteLine(Convert(studentDegree));
-}
-catch (ArgumentException e)
-{
-
-    Console.WriteLine("Wpisales nieznana ocene");
-}
-
-
-static double Convert(Degree degree)
-{
-    return degree switch
+    class Program
     {
-        Degree.A => 1.01,
-        Degree.B => 2.0,
-        Degree.C => 3.0,
-        Degree.D => 4.0,
-        Degree.E => 5.0,
-        Degree.F => 6.0
-    };
+        static void Main()
+        {
+            ICollection<string> names = new List<string>();
+            names.Add("ewa");
+            names.Add("Karol");
+            names.Add("Robert");
+            foreach (var item in names)
+            {
+                System.Console.WriteLine(item);
+            }
+
+            Console.WriteLine(names.Contains("ewa"));
+
+            ICollection<Student> students = new List<Student>();
+            students.Add(new Student() { Name="Ewa",ETCS=10});
+            students.Add(new Student() { Name="Karol",ETCS=20});
+            students.Add(new Student() { Name="Maciek",ETCS=30});
+
+            Console.WriteLine(students.Contains(new Student() { Name="Ewa",ETCS=10}));
+            Console.WriteLine();
+
+
+            IList<Student> list = (IList<Student>)students;
+           // Console.WriteLine(list[0]);
+
+            list.Insert(0, new Student() { Name="Robert",ETCS=16});
+
+
+            ISet<string> nameSet = new HashSet<string>();
+            ISet<Student> StudentGroup = new HashSet<Student>();
+            StudentGroup.Add(new Student() { Name="Ewa",ETCS = 16});
+            StudentGroup.Add(new Student() { Name="Ewa",ETCS = 16});
+            StudentGroup.Add(new Student() { Name="Ewa",ETCS = 16});
+            Console.WriteLine(StudentGroup);
+            Console.WriteLine(StudentGroup.Contains(new Student() { Name = "Ewa", ETCS = 15 })); 
+        }
+        class Student
+        {
+            public string Name { get; set; }
+            public int ETCS { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                Console.WriteLine("Eq");
+                return obj is Student student &&
+                       Name == student.Name &&
+                       ETCS == student.ETCS;
+            }
+
+            public override int GetHashCode()
+            {
+                Console.WriteLine("Hash");
+                return HashCode.Combine(Name, ETCS);
+            }
+        }
+    }
 }
-
-static string MessageFromDegree(Degree degree)
-{
-    return degree switch
-    {
-        Degree.F or Degree.E or Degree.D or Degree.C => "zdane",
-        _ => "ujebane"
-    };
-}
-
-public enum Degree
-{
-    A = 1,
-    B,
-    C,
-    D,
-    E,
-    F
-}
-
-
-
-
-
-
-
-
-
-
-
