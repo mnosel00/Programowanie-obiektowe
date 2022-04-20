@@ -146,7 +146,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Zadanie 8: 1");
+                Console.WriteLine("Zadanie 8: 0");
             }
         }
         catch (NotImplementedException e)
@@ -268,7 +268,22 @@ class Program
     public static List<Person> ProcessPeople(List<String> data)
     {
 
-        return LoadPeople(data, x => x[0].ToString().Length == 9 && x[1] > 0 );
+        return LoadPeople(data, x =>
+        {
+            string[] tab = x.Split(' ');
+            string a = tab[0];
+            int b = int.Parse(tab[1]);
+            if (a.Length==9 && a.All(char.IsDigit) && b>0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        });
     }
     
     //Zadanie 9
