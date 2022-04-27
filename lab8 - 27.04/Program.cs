@@ -142,7 +142,8 @@ class Program
     public static IEnumerable<(string CountryCode, int CitiesCount)> CountryCities(IEnumerable<City> cities,
         IEnumerable<Country> countries)
     {
-        throw new NotImplementedException();
+        var krotka = from x in cities group x by x.CountryCode into gr select (gr.Key, gr.Count());
+        return krotka;
     }
 
     //Zadanie 3
@@ -151,7 +152,27 @@ class Program
     public static IEnumerable<(string CountryName, string Capital, long CapitalPopulation)> Capitals(
         IEnumerable<City> cities, IEnumerable<Country> countries)
     {
-        throw new NotImplementedException();
+
+        
+        var quer2 = from x in countries 
+                    orderby x.CountryName 
+                    where cities.Any(y=>y.Name == x.Capital || x.Capital=="") 
+                    select(x.CountryName,x.Capital, cities.FirstOrDefault(y => y.Name == x.Capital||x.Capital=="").Population);
+
+      
+                    
+
+        Console.WriteLine(quer2.Count());
+        
+        Console.WriteLine(string.Join(", ", quer2));
+
+
+
+       
+
+        
+
+        return quer2;
     }
 
     //Zadanie 4
