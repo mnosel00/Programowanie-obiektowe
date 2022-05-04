@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Text;
 
 class Program
 {
@@ -58,7 +59,7 @@ class Program
         points += Test(() =>
         {
             var result = Capitals(cities, countries);
-            if (result.Count() == 241
+            if (result.Count() == 231
                 && result.First().Equals(("Afghanistan", "Kabul", 3043532))
                 && result.Last().Equals(("Zimbabwe", "Harare", 1542813))
                 && result.Contains(("Poland", "Warsaw", 1702139))
@@ -130,10 +131,10 @@ class Program
     //Zaimplementuja metodę, aby zwracała listę polskich maist posortowanych alfabetycznie
     public static List<City> PolishCities(IEnumerable<City> cities, IEnumerable<Country> countries)
     {
-        var sorted = cities.Where(x=>x.CountryCode=="PL").OrderBy(x=>x.Name).ToList();
-        
+        var sorted = cities.Where(x => x.CountryCode == "PL").OrderBy(x => x.Name).ToList();
+
         return sorted;
-       
+
     }
 
     //Zadanie 2
@@ -153,26 +154,25 @@ class Program
         IEnumerable<City> cities, IEnumerable<Country> countries)
     {
 
-        
-        var quer2 = from x in countries 
-                    orderby x.CountryName 
-                    where cities.Any(y=>y.Name == x.Capital || x.Capital=="") 
-                    select(x.CountryName,x.Capital, cities.FirstOrDefault(y => y.Name == x.Capital||x.Capital=="").Population);
 
-      
-                    
+        var querry = countries
 
-        Console.WriteLine(quer2.Count());
-        
-        Console.WriteLine(string.Join(", ", quer2));
+            .Where(y => cities.Any(z => z.Name == y.Capital || y.Capital == "" || z.Name == ""))
+            .OrderBy(y => y.CountryName)
+
+            .Select(krotka => ValueTuple.Create(krotka.CountryName, krotka.Capital, cities.FirstOrDefault(z => z.Name == krotka.Capital || krotka.Capital == "" || z.Name == "").Population))
+            ;
 
 
 
-       
 
-        
+        // (string CountryName, string Capital, long CapitalPopulation) tuple = querry;
 
-        return quer2;
+        /*Console.WriteLine(querry.Count());
+
+        Console.WriteLine(string.Join(", ", querry));*/
+
+        return querry;
     }
 
     //Zadanie 4
@@ -180,7 +180,8 @@ class Program
     //Zapisz wyrażenie z użyciem LINQ Fluent Api i klasy Enumerable
     public static IEnumerable<int> EvenNumbers(int max)
     {
-        throw new NotImplementedException();
+        IEnumerable<int> maksik = Enumerable.Range(0, max).Where(n => n % 2 == 0);
+        return maksik;
     }
 
     //Zadanie 5
@@ -191,7 +192,19 @@ class Program
     //Zapisz wyrażenie z użyciem LINQ Fluent Api i klasy Enumerable
     public static IEnumerable<string> RandomNames(int count)
     {
-        throw new NotImplementedException();
+        string[] array = { "Ewa", "Adam", "Karol" };
+        string res = Enumerable.Range(2, count).Select(n => array[n]).ToString();
+
+        Random random = new Random();
+        int index = array.Length;
+
+
+        IEnumerable<string> result = Enumerable.Range(0, count).Select(n => array[random.Next(index)]);
+        var result2 = Enumerable.Range(0, count).Select(n => array[random.Next(3)]);
+
+
+        //Console.WriteLine(string.Join(", ", result));
+        return result;
     }
 
     //Zadanie 6
@@ -201,7 +214,18 @@ class Program
     //"A", "AA", "AAA", "AAAA"
     public static IEnumerable<string> Ramp(string s, int count)
     {
-        throw new NotImplementedException();
+        List<string> result = new List<string>();
+
+        for (int i = 0; i <= count; i++)
+        {
+            string str = string.Concat(Enumerable.Repeat(s, i));
+            result.Add(str + "");
+
+        }
+
+        IEnumerable<string> res = result.Select(x => x).Where(x => x.Contains(s));
+       
+        return res;
     }
 
     //Zadanie 7
@@ -213,11 +237,39 @@ class Program
     //"  ***  "
     //" ***** "
     //"*******"
+
     //Zastosuj wyłącznie LINQ i metody Prepend i Append 
     public static IEnumerable<string> Tree(int height)
     {
-        
-        throw new NotImplementedException();
+        List<string> result = new List<string>();
+        int ile = height * 2 - 1;
+        string wers = "";
+        for (int i = 0; i <= height; i++)
+        {
+            for (int k = 0; k < height*2-1; k++)
+            {
+                if (k==height/2+1)
+                {
+                    wers = wers + "X";
+                }
+                else
+                {
+                    wers = wers +" ";
+                }
+                
+            }
+           
+
+            Console.WriteLine("");
+            Console.WriteLine(wers);
+   
+            
+        }
+       /* IEnumerable<string> res = result;
+
+        Console.WriteLine(string.Join(", ", res));*/
+        return result;
+
     }
 
     public static int Test(Func<int> testedCode, string message)
