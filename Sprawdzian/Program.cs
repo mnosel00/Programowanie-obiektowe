@@ -117,7 +117,7 @@ public class Program
     //Zaimplementuj metodę, aby zwróciła IEnumerable modułów tych liczb, które mają dodatnie części rzeczywiste
     static IEnumerable<double> Task5(IEnumerable<Complex> list)
     {
-        IEnumerable<double> res = list.Select(x => x).Where(x => x.Re > 0);
+        IEnumerable<double> res = list.Select(x => Convert.ToDouble(x)).Where(x => Convert.ToDouble(x) > 0);
 
         return res;
         
