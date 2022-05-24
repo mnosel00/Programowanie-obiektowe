@@ -8,6 +8,17 @@ class App
     {
         //UWAGA!!! Nie usuwaj poniższego wiersza!!!
         //Console.WriteLine("Otrzymałeś punktów: " + (Test.Exercises_1() + Test.Excersise_2() + Test.Excersise_3()));
+
+
+        /*string[] arr = { "adam", "ola", "adam", "ewa", "karol", "ala", "adam", "ola" };
+        Exercise3 ex3 = new Exercise3();
+
+       var a =  Exercise3.countElements(arr, "adam", "ewa", "ola");
+
+        foreach (var item in a)
+        {
+            Console.WriteLine(item);
+        }*/
     }
 }
 
@@ -139,18 +150,15 @@ public class Exercise3
     {
 
 
-        var tuple = countElements(arr, elements);
+        var tuplesy = new List<Tuple<T, int>>();
+        
 
-        // var dic = new Dictionary<T, int>();
         int count = 0;
 
         
         foreach (var item in elements)
         {
-            /*if (arr.Contains(item))
-            {
-                count++;
-            }*/
+            
             for (int i = 0; i < arr.Length; i++)
             {
                 if (EqualityComparer<T>.Default.Equals(item,arr[i]))
@@ -158,11 +166,18 @@ public class Exercise3
                     count++;
                 }
             }
-            tuple = new[] { (item, count) };
+            tuplesy.Add(new Tuple<T, int>(item, count)); 
+             
             count=0;
         }
+
         
-        return tuple;
+
+     
+
+       
+
+        return tuplesy.Select(x=>(x.Item1,x.Item2)).ToArray();
 
 
 
