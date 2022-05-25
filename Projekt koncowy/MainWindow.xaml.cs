@@ -21,13 +21,13 @@ using System.Xml.Linq;
 
 namespace Projekt_koncowy
 {
-   // record Crypto (string symbol, string name, float current_price, long market_cap, int market_cap_rank, float high_24h, float low_24h, float price_change_24h);
+    record Crypto (string id, string symbol, string name, float current_price, int market_cap_rank, float high_24h, float low_24h, float price_change_24h, float ath, DateTime ath_date, DateTime last_updated);
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Dictionary<string, Crypto> Rates = new Dictionary<string, Crypto>();
+        Dictionary<string, Crypto> Rates = new Dictionary<string, Crypto>();
 
         private void DownloadData()
         {
@@ -81,9 +81,22 @@ namespace Projekt_koncowy
             client.Headers.Add("Content-Type", "application/json");
             string json = client.DownloadString("https://api.coingecko.com/api/v3/coins/markets?vs_currency=pln&order=market_cap_desc&per_page=100&page=1&sparkline=false");
             List<CryptoModel> info = JsonSerializer.Deserialize<List<CryptoModel>>(json);
-           
 
-           
+            
+            foreach (var item in info)
+            {
+                Rates.Add(item.id, new Crypto(item.id, item.symbol, item.name,
+                                                item.current_price, item.market_cap_rank,
+                                                item.high_24h, item.low_24h, item.price_change_24h,
+                                                item.ath, item.ath_date, item.last_updated
+                    ));
+            }
+
+
+            foreach (var item in Rates)
+            {
+                ListaApi.Text += $"Nazwa coina: {item.Key}, dane coina: {item.Value}";
+            }
 
         }
     }
