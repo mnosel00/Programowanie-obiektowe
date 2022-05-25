@@ -57,23 +57,6 @@ namespace Projekt_koncowy
            // DownloadJson();
         }
 
-       /* private void getAllItems()
-        {
-            using(WebClient client = new WebClient())
-            {
-                string url = string.Format("https://api.coingecko.com/api/v3/coins/markets?vs_currency=pln&order=market_cap_desc&per_page=100&page=1&sparkline=false");
-                string json = client.DownloadString(url);
-
-               Data.Root info = JsonConvert.DeserializeObject<Data.Root>(json);
-
-                string input = info.CryptoCurrencyModel.name.ToString();
-
-                ListaApi.Text = input;
-
-
-            }
-
-        }*/
 
         private void DownloadJson()
         {
