@@ -45,7 +45,7 @@ namespace Projekt_koncowy
         {
             InitializeComponent();
             //getAllItems();
-            DownloadJson();
+            //DownloadJson();
             
 
         }
@@ -54,7 +54,7 @@ namespace Projekt_koncowy
         {
 
             //getAllItems();
-           // DownloadJson();
+            DownloadJson();
         }
 
 
@@ -75,11 +75,19 @@ namespace Projekt_koncowy
                     ));
             }
 
+            ListaApi.Text = "";
 
             foreach (var item in Rates)
             {
-                ListaApi.Text += $"Nazwa coina: {item.Key}, dane coina: {item.Value}";
+                ListaApi.Text += $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
             }
+
+
+
+        }
+
+        private void GetFromDropMenu_click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
