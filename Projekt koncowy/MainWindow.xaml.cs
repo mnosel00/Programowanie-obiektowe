@@ -21,7 +21,7 @@ using System.Xml.Linq;
 
 namespace Projekt_koncowy
 {
-    record Crypto (string id, string symbol, string name, float current_price, int market_cap_rank, float high_24h, float low_24h, float price_change_24h, float ath, DateTime ath_date, DateTime last_updated);
+    record Crypto(string id, string symbol, string name, float current_price, int market_cap_rank, float high_24h, float low_24h, float price_change_24h, float ath, DateTime ath_date, DateTime last_updated);
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -39,24 +39,43 @@ namespace Projekt_koncowy
 
             //Zmienic pobranego XML na słownik rekordow Rate*/
 
-         
+
         }
         public MainWindow()
         {
             InitializeComponent();
-            //getAllItems();
-            //DownloadJson();
-            
+            DownloadJson();
+            foreach (var item in Rates)
+            {
+                DropList.Items.Add(item.Value.name);
+            }
+            DropList.SelectedIndex = 0;
 
         }
 
         private void GetAll_Click(object sender, RoutedEventArgs e)
         {
 
-            //getAllItems();
-            DownloadJson();
+
+            foreach (var item in Rates)
+            {
+                ListaApi.Text += $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.name}  {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
+            }
         }
 
+        private void GetFromDropMenu_click(object sender, RoutedEventArgs e)
+        {
+            string inputCoin = DropList.Text;
+            // ListFromDropMenu.Text = Rates.Select(x=>(x.Value.name,x.Value.current_price,x.Value.ath,x.Value.ath_date)).Where(x=>x.name==inputCoin).ToString();
+
+            foreach (var item in Rates)
+            {
+                if (item.Value.name==inputCoin)
+                {
+                    ListFromDropMenu.Text = $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.name}  {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n"; 
+                }
+            }
+        }
 
         private void DownloadJson()
         {
@@ -65,7 +84,8 @@ namespace Projekt_koncowy
             string json = client.DownloadString("https://api.coingecko.com/api/v3/coins/markets?vs_currency=pln&order=market_cap_desc&per_page=100&page=1&sparkline=false");
             List<CryptoModel> info = JsonSerializer.Deserialize<List<CryptoModel>>(json);
 
-            
+
+
             foreach (var item in info)
             {
                 Rates.Add(item.id, new Crypto(item.id, item.symbol, item.name,
@@ -75,20 +95,9 @@ namespace Projekt_koncowy
                     ));
             }
 
-            ListaApi.Text = "";
-
-            foreach (var item in Rates)
-            {
-                ListaApi.Text += $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
-            }
-
-
 
         }
 
-        private void GetFromDropMenu_click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }
