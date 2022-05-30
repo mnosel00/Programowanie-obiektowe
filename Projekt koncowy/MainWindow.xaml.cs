@@ -116,7 +116,7 @@ namespace Projekt_koncowy
         }
 
         private void DownloadJson()
-        {
+        { 
             string currency = DropCurencyList.Text;
             WebClient client = new WebClient();
             client.Headers.Add("Content-Type", "application/json");
