@@ -109,6 +109,21 @@ namespace Projekt_koncowy
                 DownloadJsonExchange();
                 CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
             }
+            else if (DropCurencyList.Text == "USD" && DropCurencyList.Text != curency)
+            {
+                DownloadJsonExchange();
+                CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+            }
+            else if (DropCurencyList.Text == "EUR" && DropCurencyList.Text != curency)
+            {
+                DownloadJsonExchange();
+                CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+            }
+            else if (DropCurencyList.Text == "GBP" && DropCurencyList.Text != curency)
+            {
+                DownloadJsonExchange();
+                CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+            }
 
             // API key: xkp4MKt6Cd8IJddRngLS3mQKZHmIIomd
             //fetch("https://api.apilayer.com/exchangerates_data/convert?to={to}&from={from}&amount={amount}", requestOptions)
