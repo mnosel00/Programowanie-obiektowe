@@ -98,31 +98,40 @@ namespace Projekt_koncowy
             string coin = Coin.Text;
             string symbol = Rates.Where(x => x.Value.name == coin).Select(x => x.Value.symbol).FirstOrDefault();
             float coinPrice = Rates.Where(x => x.Value.name == coin).Select(x => x.Value.current_price).FirstOrDefault();
+            DownloadJsonExchange();
 
             if (DropCurencyList.Text == curency)
             {
-       
+                DownloadJsonExchange();
                 CalcList.Text = $"Za kwotę {kwota}{curency} możesz kupić {kwota / coinPrice} {symbol}";
             }
             else if (DropCurencyList.Text == "PLN" && DropCurencyList.Text != curency)
             {
-                DownloadJsonExchange();
-                CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                
+                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
             }
             else if (DropCurencyList.Text == "USD" && DropCurencyList.Text != curency)
             {
-                DownloadJsonExchange();
-                CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+               
+                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
             }
             else if (DropCurencyList.Text == "EUR" && DropCurencyList.Text != curency)
             {
-                DownloadJsonExchange();
-                CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+               
+                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
             }
             else if (DropCurencyList.Text == "GBP" && DropCurencyList.Text != curency)
             {
-                DownloadJsonExchange();
-                CalcList.Text = $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+               
+                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
             }
 
             // API key: xkp4MKt6Cd8IJddRngLS3mQKZHmIIomd
