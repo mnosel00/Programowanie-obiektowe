@@ -152,30 +152,30 @@ namespace Projekt_koncowy
                 else if (DropCurencyList.Text == "PLN" && DropCurencyList.Text != curency)
                 {
 
-                    CalcList.Text = $"1Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                    CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
                         $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                        $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                        $"Za kwotę {pieniadz}{DropCurencyList.Text} czyli ({kwota}{Curency.Text}) możesz kupić {pieniadz / coinPrice} {symbol}";
                 }
                 else if (DropCurencyList.Text == "USD" && DropCurencyList.Text != curency)
                 {
 
                     CalcList.Text = $"2Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
                         $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                        $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                        $"Za kwotę {pieniadz}{DropCurencyList.Text} czyli ({kwota}{Curency.Text}) możesz kupić {pieniadz / coinPrice} {symbol}";
                 }
                 else if (DropCurencyList.Text == "EUR" && DropCurencyList.Text != curency)
                 {
 
                     CalcList.Text = $"3Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
                         $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                        $"Za kwotę {kwota}{Curency.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                        $"Za kwotę {pieniadz}{Curency.Text} czyli ({kwota}{Curency.Text}) możesz kupić {pieniadz / coinPrice} {symbol}";
                 }
                 else if (DropCurencyList.Text == "GBP" && DropCurencyList.Text != curency)
                 {
 
                     CalcList.Text = $"4Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
                         $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                        $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                        $"Za kwotę {pieniadz}{DropCurencyList.Text} czyli ({kwota}{Curency.Text}) możesz kupić {pieniadz / coinPrice} {symbol}";
                 }
             }
             catch (Exception ex )
