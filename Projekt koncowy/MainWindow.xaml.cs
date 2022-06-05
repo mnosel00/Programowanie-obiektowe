@@ -265,6 +265,9 @@ namespace Projekt_koncowy
             
         }
 
+        private void DropCurencyList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
     }
 }
