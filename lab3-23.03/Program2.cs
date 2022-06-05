@@ -148,41 +148,20 @@ public class Exercise3
     //W obu tablicach moga pojawić się wartości null, które też muszą być zliczane
     public static (T, int)[] countElements<T>(T[] arr, params T[] elements)
     {
-
-
-        var tuplesy = new List<Tuple<T, int>>();
-        
-
-        int count = 0;
-
-        
+        Dictionary<T, int> slownik = new Dictionary<T, int>();
         foreach (var item in elements)
         {
-            
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (EqualityComparer<T>.Default.Equals(item,arr[i]))
-                {
-                    count++;
-                }
-            }
-            tuplesy.Add(new Tuple<T, int>(item, count)); 
-             
-            count=0;
+            slownik.Add(item, 0);
         }
-
-        
-
-     
-
-       
-
-        return tuplesy.Select(x=>(x.Item1,x.Item2)).ToArray();
-
-
-
-
-
+        foreach (var item in arr)
+        {
+            int i;
+            if (slownik.TryGetValue(item, out i))
+            {
+                slownik[item]++;
+            }
+        }
+        return slownik.Select(c => (c.Key, c.Value)).ToArray();
     }
 }
 

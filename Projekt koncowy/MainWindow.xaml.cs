@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -31,11 +32,11 @@ namespace Projekt_koncowy
         Dictionary<string, Crypto> Rates = new Dictionary<string, Crypto>();
         Dictionary<int, Exchange> RatesEx = new Dictionary<int, Exchange>();
         float pieniadz;
+      
 
 
         public MainWindow()
         {
-            
             InitializeComponent();
             DropCurencyList.Items.Add("USD");
             DropCurencyList.Items.Add("PLN");
@@ -49,90 +50,140 @@ namespace Projekt_koncowy
 
             DropCurencyList.SelectedIndex = 1;
 
-            DownloadJson();
-
-            foreach (var item in Rates)
+            try
             {
-                DropList.Items.Add(item.Value.name);
-                Coin.Items.Add(item.Value.name);
+              
+                    DownloadJson();
+                    
+              
+
+                foreach (var item in Rates)
+                {
+                    DropList.Items.Add(item.Value.name);
+                    Coin.Items.Add(item.Value.name);
+                }
+                DropList.SelectedIndex = 0;
+                Coin.SelectedIndex = 0;
             }
-            DropList.SelectedIndex = 0;
-            Coin.SelectedIndex = 0;
+            catch (Exception ey )
+            {
+
+                MessageBox.Show("Nie można połączyć się z siecią. Sprawdz połączenie z internetem !");
+            }
+            
 
 
         }
 
         private void GetAll_Click(object sender, RoutedEventArgs e)
         {
-            ListaApi.Text = "";
-            DownloadJson();
-
-            foreach (var item in Rates)
+            try
             {
-                ListaApi.Text += $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.name}  {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
+                ListaApi.Text = "";
+                DownloadJson();
+
+                foreach (var item in Rates)
+                {
+                    ListaApi.Text += $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.name}  {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
+
+                }
             }
+            catch (Exception yt)
+            {
+
+                MessageBox.Show(yt.Message);
+            }
+            
+
+            
+
         }
 
         private void GetFromDropMenu_click(object sender, RoutedEventArgs e)
         {
-            DownloadJson();
-            string inputCoin = DropList.Text;
-             /*ListFromDropMenu.Text = Rates.Select(x=>(x.Value.name,x.Value.current_price,x.Value.ath,x.Value.ath_date)).Where(x=>x.name==inputCoin).ToString();*/
-
-            foreach (var item in Rates)
+            try
             {
-                if (item.Value.name==inputCoin)
+                DownloadJson();
+                string inputCoin = DropList.Text;
+                /*ListFromDropMenu.Text = Rates.Select(x=>(x.Value.name,x.Value.current_price,x.Value.ath,x.Value.ath_date)).Where(x=>x.name==inputCoin).ToString();*/
+
+                foreach (var item in Rates)
                 {
-                    //ListFromDropMenu.Text = $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.name}  {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
-                    ListFromDropMenu.Text = item.Value.ToString();
+                    if (item.Value.name == inputCoin)
+                    {
+                        //ListFromDropMenu.Text = $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.name}  {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
+                        ListFromDropMenu.Text = $"Nazwa pobranego coina: {item.Value.name}\n" +
+                            $"Aktualna cena: {item.Value.current_price}{DropCurencyList.Text}\n" +
+                            $"Pozycja na giełdzie: {item.Value.market_cap_rank}\n" +
+                            $"W dniu {item.Value.ath_date} {item.Value.id} osiągnął maksymalną wartość, która wyniosła {item.Value.ath}{DropCurencyList.Text}\n" +
+                            $"W ostatnich 24 godzinach cena pobranej waluty zmieniła się o {item.Value.price_change_24h}{DropCurencyList.Text}\n" +
+                            $"W dniu dzisiejszym {item.Value.id} osiągnał cene maksymalną wynoszącą {item.Value.high_24h}{DropCurencyList.Text}\n" +
+                            $"Z kolei cena najniższa zamknęła się na {item.Value.low_24h}{DropCurencyList.Text}";
+                    }
                 }
             }
+            catch (Exception rt)
+            {
+
+               MessageBox.Show(rt.Message);
+            }
+           
         }
 
         private void GetCalc_Click(object sender, RoutedEventArgs e)
         {
-            DownloadJson();
-
-            int kwota = int.Parse(MoneyAmount.Text);
-            string curency = Curency.Text;
-            string coin = Coin.Text;
-            string symbol = Rates.Where(x => x.Value.name == coin).Select(x => x.Value.symbol).FirstOrDefault();
-            float coinPrice = Rates.Where(x => x.Value.name == coin).Select(x => x.Value.current_price).FirstOrDefault();
-            DownloadJsonExchange();
-
-            if (DropCurencyList.Text == curency)
+            try
             {
+                DownloadJson();
+
+                int kwota = int.Parse(MoneyAmount.Text);
+                string curency = Curency.Text;
+               
+                string coin = Coin.Text;
+                string symbol = Rates.Where(x => x.Value.name == coin).Select(x => x.Value.symbol).FirstOrDefault();
+                float coinPrice = Rates.Where(x => x.Value.name == coin).Select(x => x.Value.current_price).FirstOrDefault();
                 DownloadJsonExchange();
-                CalcList.Text = $"Za kwotę {kwota}{curency} możesz kupić {kwota / coinPrice} {symbol}";
+
+                if (DropCurencyList.Text == curency)
+                {
+                    DownloadJsonExchange();
+                    CalcList.Text = $"Za kwotę {kwota}{curency} możesz kupić {kwota / coinPrice} {symbol}";
+                }
+                else if (DropCurencyList.Text == "PLN" && DropCurencyList.Text != curency)
+                {
+
+                    CalcList.Text = $"1Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                        $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                        $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                }
+                else if (DropCurencyList.Text == "USD" && DropCurencyList.Text != curency)
+                {
+
+                    CalcList.Text = $"2Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                        $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                        $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                }
+                else if (DropCurencyList.Text == "EUR" && DropCurencyList.Text != curency)
+                {
+
+                    CalcList.Text = $"3Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                        $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                        $"Za kwotę {kwota}{Curency.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                }
+                else if (DropCurencyList.Text == "GBP" && DropCurencyList.Text != curency)
+                {
+
+                    CalcList.Text = $"4Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
+                        $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
+                        $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+                }
             }
-            else if (DropCurencyList.Text == "PLN" && DropCurencyList.Text != curency)
+            catch (Exception ex )
             {
-                
-                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
-                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
+
+                MessageBox.Show("Błędnie wprowadzone dane. Proszę poprawić wartości i uruchomić funkcję jeszcze raz"); 
             }
-            else if (DropCurencyList.Text == "USD" && DropCurencyList.Text != curency)
-            {
-               
-                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
-                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
-            }
-            else if (DropCurencyList.Text == "EUR" && DropCurencyList.Text != curency)
-            {
-               
-                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
-                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
-            }
-            else if (DropCurencyList.Text == "GBP" && DropCurencyList.Text != curency)
-            {
-               
-                CalcList.Text = $"Waluta którą posiadasz, różni się od tej, która występuję na rynku.\nNastąpi " +
-                    $"przeliczenie na {DropCurencyList.Text}. \n{kwota}{curency} po przekonwertowaniu wynosi {pieniadz}{DropCurencyList.Text}.\n" +
-                    $"Za kwotę {pieniadz}{DropCurencyList.Text} możesz kupić {pieniadz / coinPrice} {symbol}";
-            }
+            
 
             // API key: xkp4MKt6Cd8IJddRngLS3mQKZHmIIomd
             //fetch("https://api.apilayer.com/exchangerates_data/convert?to={to}&from={from}&amount={amount}", requestOptions)
@@ -140,60 +191,78 @@ namespace Projekt_koncowy
         }
 
         private void DownloadJson()
-        { 
-            string currency = DropCurencyList.Text;
-            WebClient client = new WebClient();
-            client.Headers.Add("Content-Type", "application/json");
-            string json = client.DownloadString($"https://api.coingecko.com/api/v3/coins/markets?vs_currency={currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false");
-            List<CryptoModel> info = JsonSerializer.Deserialize<List<CryptoModel>>(json);
-
-            //https://api.coingecko.com/api/v3/coins/markets?vs_currency=pln&order=market_cap_desc&per_page=100&page=1&sparkline=false
-
-
-
-            foreach (var item in info)
+        {
+            try
             {
-                if (!Rates.ContainsKey(item.id))
+                string currency = DropCurencyList.Text;
+                WebClient client = new WebClient();
+                client.Headers.Add("Content-Type", "application/json");
+                string json = client.DownloadString($"https://api.coingecko.com/api/v3/coins/markets?vs_currency={currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false");
+                List<CryptoModel> info = JsonSerializer.Deserialize<List<CryptoModel>>(json);
+
+                //https://api.coingecko.com/api/v3/coins/markets?vs_currency=pln&order=market_cap_desc&per_page=100&page=1&sparkline=false
+
+
+
+                foreach (var item in info)
                 {
-                    Rates.Add(item.id, new Crypto(item.id, item.symbol, item.name,
-                                                item.current_price, item.market_cap_rank,
-                                                item.high_24h, item.low_24h, item.price_change_24h,
-                                                item.ath, item.ath_date, item.last_updated
-                    ));
+                    if (!Rates.ContainsKey(item.id))
+                    {
+                        Rates.Add(item.id, new Crypto(item.id, item.symbol, item.name,
+                                                    item.current_price, item.market_cap_rank,
+                                                    item.high_24h, item.low_24h, item.price_change_24h,
+                                                    item.ath, item.ath_date, item.last_updated
+                        ));
+                    }
+                    else
+                    {
+
+                        Rates[item.id] = new Crypto(item.id, item.symbol, item.name,
+                                                    item.current_price, item.market_cap_rank,
+                                                    item.high_24h, item.low_24h, item.price_change_24h,
+                                                    item.ath, item.ath_date, item.last_updated);
+                    }
+
+
                 }
-                else
-                {
-                    
-                    Rates[item.id] = new Crypto(item.id, item.symbol, item.name,
-                                                item.current_price, item.market_cap_rank,
-                                                item.high_24h, item.low_24h, item.price_change_24h,
-                                                item.ath, item.ath_date, item.last_updated);
-                }
-               
-                
             }
+            catch (Exception e )
+            {
+
+                MessageBox.Show("Nie można połączyć się z siecią. Sprawdz połączenie z internetem !");
+            }
+            
 
 
         }
         
         private void DownloadJsonExchange()
         {
-            string to = DropCurencyList.Text;
-            string from = Curency.Text;
-            string amount = MoneyAmount.Text;
-            int id = 0;
+            try
+            {
+                string to = DropCurencyList.Text;
+                string from = Curency.Text;
+                string amount = MoneyAmount.Text;
+                int id = 0;
 
 
-            WebClient clientEx = new WebClient();
-            clientEx.Headers.Add("Content-Type", "application/json");
-            string jsn = clientEx.DownloadString($"https://api.apilayer.com/exchangerates_data/convert?to={to}&from={from}&amount={amount}&apikey=xkp4MKt6Cd8IJddRngLS3mQKZHmIIomd");
-            //List<Rootobject> infoEx = JsonSerializer.Deserialize<List<Rootobject>>(jsn);
+                WebClient clientEx = new WebClient();
+                clientEx.Headers.Add("Content-Type", "application/json");
+                string jsn = clientEx.DownloadString($"https://api.apilayer.com/exchangerates_data/convert?to={to}&from={from}&amount={amount}&apikey=xkp4MKt6Cd8IJddRngLS3mQKZHmIIomd");
+                //List<Rootobject> infoEx = JsonSerializer.Deserialize<List<Rootobject>>(jsn);
 
-            Rootobject infoEx = JsonSerializer.Deserialize<Rootobject>(jsn);
+                Rootobject infoEx = JsonSerializer.Deserialize<Rootobject>(jsn);
 
-            //https://api.apilayer.com/exchangerates_data/convert?to=pln&from=usd&amount=1000&apikey=xkp4MKt6Cd8IJddRngLS3mQKZHmIIomd
+                //https://api.apilayer.com/exchangerates_data/convert?to=pln&from=usd&amount=1000&apikey=xkp4MKt6Cd8IJddRngLS3mQKZHmIIomd
 
-            pieniadz = infoEx.result;
+                pieniadz = infoEx.result;
+            }
+            catch (Exception ec)
+            {
+
+                MessageBox.Show("Proszę podać poprawne dane ");
+            }
+            
         }
 
 
