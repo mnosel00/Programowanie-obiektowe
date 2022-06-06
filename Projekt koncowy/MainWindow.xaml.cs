@@ -89,8 +89,8 @@ namespace Projekt_koncowy
                 {
                     ListaApi.Text += $"{id}\n" +
                         $"Nazwa coina: {item.Key}\n" +
-                        $"Cena: {item.Value.current_price}\n" +
-                        $"Max Wartość: {item.Value.ath}\n" +
+                        $"Cena: {item.Value.current_price}{DropCurencyList.Text}\n" +
+                        $"Max Wartość: {item.Value.ath}{DropCurencyList.Text}\n" +
                         $"Data Max Wartość: {item.Value.ath_date}\n\n";
                     id++;
                 }
