@@ -38,6 +38,7 @@ namespace Projekt_koncowy
         public MainWindow()
         {
             InitializeComponent();
+            GetAll_NewWindow.IsEnabled = false;
             DropCurencyList.Items.Add("USD");
             DropCurencyList.Items.Add("PLN");
             DropCurencyList.Items.Add("EUR");
@@ -54,6 +55,8 @@ namespace Projekt_koncowy
             {
               
                     DownloadJson();
+
+                
                     
               
 
@@ -79,7 +82,7 @@ namespace Projekt_koncowy
         {
             try
             {
-                ListaApi.Text = "";
+                ListaApi.Text += "";
                 DownloadJson();
                 int id = 1;
                 foreach (var item in Rates)
@@ -90,6 +93,11 @@ namespace Projekt_koncowy
                         $"Max Wartość: {item.Value.ath}\n" +
                         $"Data Max Wartość: {item.Value.ath_date}\n\n";
                     id++;
+                }
+
+                if (ListaApi.Text!="")
+                {
+                    GetAll_NewWindow.IsEnabled = true;
                 }
             }
             catch (Exception yt)
@@ -272,6 +280,27 @@ namespace Projekt_koncowy
         private void DropCurencyList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void GetAll_ClickNewWindow(object sender, RoutedEventArgs e)
+        {
+           
+            try
+            {
+
+                string value = ListaApi.Text;
+                info infoWindow = new info(value);
+                
+                
+
+                infoWindow.Show();
+            }
+            catch (Exception yt)
+            {
+
+                MessageBox.Show(yt.Message);
+            }
+            
         }
     }
 }
