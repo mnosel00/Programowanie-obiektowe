@@ -81,11 +81,15 @@ namespace Projekt_koncowy
             {
                 ListaApi.Text = "";
                 DownloadJson();
-
+                int id = 1;
                 foreach (var item in Rates)
                 {
-                    ListaApi.Text += $"Nazwa coina: {item.Key}{"\n"}  Cena: {item.Value.name}  {item.Value.current_price}, Max Wartość: {item.Value.ath}, Data Max Wartość: {item.Value.ath_date} \n\n";
-
+                    ListaApi.Text += $"{id}\n" +
+                        $"Nazwa coina: {item.Key}\n" +
+                        $"Cena: {item.Value.current_price}\n" +
+                        $"Max Wartość: {item.Value.ath}\n" +
+                        $"Data Max Wartość: {item.Value.ath_date}\n\n";
+                    id++;
                 }
             }
             catch (Exception yt)
