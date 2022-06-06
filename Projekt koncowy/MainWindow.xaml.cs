@@ -82,7 +82,7 @@ namespace Projekt_koncowy
         {
             try
             {
-                ListaApi.Text += "";
+                ListaApi.Text = "";
                 DownloadJson();
                 int id = 1;
                 foreach (var item in Rates)

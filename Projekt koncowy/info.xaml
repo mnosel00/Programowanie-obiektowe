@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Projekt_koncowy"
         mc:Ignorable="d"
         Background="Black"
+        MinHeight="450"
+        MinWidth="800"
         Title="info" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,7 +20,7 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="Head" FontFamily="Elephant" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Lista wszystkich pozycji na gieldzie kryptowalut" VerticalAlignment="Stretch" Margin="10,10,10,5" Background="#FFF34E4E" FontSize="24" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
         <TextBox x:Name="Crypto_Text" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" Margin="10,5,10,10" FontFamily="Dubai Medium" FontSize="20" Background="#FF5AC3F7"/>
-        <Frame Content="Frame" Grid.Row="1"/>
+       
     </Grid>
 
 </Window>

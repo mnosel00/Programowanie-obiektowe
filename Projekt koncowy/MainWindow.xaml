@@ -12,15 +12,15 @@
         >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="96*"></RowDefinition>
-            <RowDefinition Height="47*"></RowDefinition>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="73*"/>
-            <RowDefinition Height="73*"/>
-            <RowDefinition Height="49*"></RowDefinition>
-            <RowDefinition Height="49*"/>
-            <RowDefinition Height="49*"/>
-            <RowDefinition Height="49*"/>
+            <RowDefinition Height="59*"></RowDefinition>
+            <RowDefinition Height="59*"></RowDefinition>
+            <RowDefinition Height="59*"/>
+            <RowDefinition Height="89*"/>
+            <RowDefinition Height="89*"/>
+            <RowDefinition Height="44*"></RowDefinition>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="44*"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
 
         <Border BorderBrush="White" BorderThickness="1" Grid.ColumnSpan="3" Margin="5,5,5,3" Grid.RowSpan="3"/>
 
-        <Button x:Name="GetAll" Background="Red" Content="Pobierz liste" Margin="10,1,5,3" FontSize="24" Click="GetAll_Click" Grid.Row="1" Foreground="Black" FontFamily="Elephant" FontWeight="Normal"/>
+        <Button x:Name="GetAll" Background="Red" Content="Pobierz liste" Margin="10,5,5,5" FontSize="24" Click="GetAll_Click" Foreground="Black" FontFamily="Elephant" FontWeight="Normal" Grid.Row="1"/>
         <TextBox x:Name="ListaApi" Background="#FF5AC3F7" Grid.Column="1" Margin="5,10,10,10" TextWrapping="Wrap" Grid.ColumnSpan="2" Grid.RowSpan="3" Visibility="Visible" IsReadOnly="True" FontFamily="Dubai Medium" FontSize="17"/>
         <ComboBox x:Name="DropCurencyList" Background="#E8CEBF" Margin="10,10,5,5" SelectionChanged="DropCurencyList_SelectionChanged" FontFamily="Elephant" FontSize="18" Foreground="#FFB72E2E"/>
 
@@ -48,7 +48,7 @@
         <ComboBox x:Name="Coin" Background="#E8CEBF" Grid.Row="7" Margin="10,5,5,5" Foreground="#FFB72E2E" FontFamily="Elephant" FontSize="16"/>
         <TextBox x:Name="CalcList" Background="#FF5AC3F7" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,8,10,5" Grid.Row="5" TextWrapping="Wrap" Grid.RowSpan="4" IsReadOnly="True" FontFamily="Dubai Medium" FontSize="17"/>
         <Button x:Name="GetCalc" Background="RED" Content="Przelicz" Margin="10,5,5,5" Grid.Row="8" Click="GetCalc_Click" FontFamily="Elephant" FontSize="18"/>
-        <Button x:Name="GetAll_NewWindow" Background="Red" Content="Otworz liste w nowym oknie" Margin="10,2,5,8" FontSize="16" Click="GetAll_ClickNewWindow" Grid.Row="2" Foreground="Black" FontFamily="Elephant" FontWeight="Normal"/>
+        <Button x:Name="GetAll_NewWindow" Background="Red" Content="Otworz liste w nowym oknie" Margin="10,5,5,10" FontSize="16" Click="GetAll_ClickNewWindow" Grid.Row="2" Foreground="Black" FontFamily="Elephant" FontWeight="Normal"/>
 
 
 
