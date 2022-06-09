@@ -6,123 +6,277 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Complex a = new Complex() {Re = 3d, Im = 2d};
-        double factor = 5.0d;
-        int points = 0;
-        if ((a * factor).Re == 15 && (a * factor).Im == 10 && (factor * a).Re == 15 && (factor * a).Im == 10
-            && (5 * new Complex(){Re = 1, Im = -5}).Im == -25)
+        Length a = new Length() {Unit = LengthUnit.Millimeter, Value = 1000.0m};
+        Length b = new Length() {Unit = LengthUnit.Meter, Value = 1.0m};
+        Length c = new Length() {Unit = LengthUnit.Kilometer, Value = 0.001m};
+        decimal factor = 2.0m;
+        decimal points = 0;
+        if ((a * factor).Value == 2000m && (b * factor).Unit == LengthUnit.Meter && (b * factor).Value == 2 && 
+            (new Length() {Unit = LengthUnit.Millimeter, Value = 6} * 1m).Value == 6)
         {
-            Console.WriteLine("Zadanie 1: Ok");
-            points++;
+            Console.WriteLine($"Zadanie 1-1: 0.5 punkt");
+            points += 0.5m;
         }
-        if (new Complex() {Re = 1, Im = 2} == new Complex() {Re = 1, Im = 2} &&
-            !(new Complex() {Re = 1, Im = 2} == new Complex() {Re = 1, Im = 3}))
+        else
         {
-            Console.WriteLine(("Zadanie 2: Ok"));
-            points++;
+            Console.WriteLine($"Zadanie 1-1: 0 punktów");
+        }
+        try
+        {
+            Length length = a * -6;
+            Console.WriteLine("Zadanie 1-2: 0 punktów");
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine("Zadanie 1-2: 0.5 punkt");
+            points += 0.5m;
         }
 
-        if (new Complex() {Re = 1, Im = 2}.Equals(new Complex() {Re = 1, Im = 2}) &&
-            !new Complex() {Re = 1, Im = 2}.Equals(new Complex() {Re = 1, Im = 3}))
+        Length d = new Length() {Unit = LengthUnit.Meter, Value = 2.0m};
+        if (a < d && c < d && b < d)
         {
-            Console.WriteLine(("Zadanie 3: Ok"));
+            Console.WriteLine(("Zadanie 2: 1 punkt"));
             points++;
         }
-
-        List<Complex> list = new List<Complex>()
+        else
         {
-            new Complex() {Re = -1, Im = 1},
-            new Complex() {Re = 2, Im = -2},
-            new Complex() {Re = 3, Im = -3},
-            new Complex() {Re = -4, Im = 4},
-            new Complex() {Re = -1, Im = 0},
-            new Complex() {Re = 0, Im = 2},
+            Console.WriteLine(("Zadanie 2: 0 punkt"));
+        }
+
+        if (a.Equals(b) && b.Equals(c) && c.Equals(a) && !d.Equals(a))
+        {
+            Console.WriteLine(("Zadanie 3: 1 punkt"));
+            points++;
+        }
+        else
+        {
+            Console.WriteLine(("Zadanie 3: 0 punkt"));
+        }
+
+        List<Length> list = new List<Length>()
+        {
+            c, a, b, d,
+            new Length() {Unit = LengthUnit.Millimeter, Value = 10.0m},
+            new Length() {Unit = LengthUnit.Kilometer, Value = 2.0m}
         };
         Task4(list);
-        if (list[0] == new Complex() {Re = -1, Im = 0} && list[1] == new Complex() {Re = -1, Im = 1} &&
-            list[5] == new Complex() {Re = -4, Im = 4})
+        if (list[0].Unit == LengthUnit.Millimeter && list[0].Value == 10 && list[1].Unit == LengthUnit.Millimeter && list[1].Value == 1000 &&
+            list[5].Unit == LengthUnit.Kilometer && list[5].Value == 2)
         {
-            Console.WriteLine(("Zadanie 4: Ok"));
+            Console.WriteLine(("Zadanie 4: 1 punkt"));
             points++;
         }
-        var result1 = Task5(list).ToList();
-        var result2 = Task5(Enumerable.Repeat<Complex>(new Complex() { Re = 3, Im = 4 }, 2)).ToList();
-        if (result1.Count == 2 && result1.Contains(2.8284271247461903) && result1.Contains(4.242640687119285)
-            && result2.Count == 2 && result2.Contains(5))
+        else
         {
-            Console.WriteLine(("Zadanie 5: Ok"));
+            Console.WriteLine(("Zadanie 4: 0 punkt"));
+        }
+
+        List<Student> students = new List<Student>()
+        {
+            new Student() {StudyYear = 1, Height = new Length() {Unit = LengthUnit.Millimeter, Value = 1600.0m}},
+            new Student() {StudyYear = 1, Height = new Length() {Unit = LengthUnit.Millimeter, Value = 1700.0m}},
+            new Student() {StudyYear = 3, Height = new Length() {Unit = LengthUnit.Meter, Value = 1.76m}},
+            new Student() {StudyYear = 1, Height = new Length() {Unit = LengthUnit.Millimeter, Value = 1670.0m}},
+            new Student() {StudyYear = 2, Height = new Length() {Unit = LengthUnit.Kilometer, Value = 0.00197m}},
+            new Student() {StudyYear = 1, Height = new Length() {Unit = LengthUnit.Meter, Value = 1.770m}},
+            new Student() {StudyYear = 2, Height = new Length() {Unit = LengthUnit.Millimeter, Value = 1820.0m}}
+        };
+        List<Student> st = new List<Student>()
+        {
+            new Student() {StudyYear = 1, Height = new Length() {Unit = LengthUnit.Millimeter, Value = 1600.0m}},
+            new Student() {StudyYear = 1, Height = new Length() {Unit = LengthUnit.Meter, Value = 1.6000m}},
+            new Student() {StudyYear = 1, Height = new Length() {Unit = LengthUnit.Kilometer, Value = 0.0016m}},
+            new Student() {StudyYear = 2, Height = new Length() {Unit = LengthUnit.Millimeter, Value = 1670.0m}},
+            new Student() {StudyYear = 2, Height = new Length() {Unit = LengthUnit.Kilometer, Value = 0.00197m}},
+            new Student() {StudyYear = 3, Height = new Length() {Unit = LengthUnit.Meter, Value = 1.770m}},
+            new Student() {StudyYear = 2, Height = new Length() {Unit = LengthUnit.Millimeter, Value = 1820.0m}}
+        };
+       /* if (Task5(students).Unit == LengthUnit.Meter && Task5(students).Value == 1.685m && Task5(st).Unit == LengthUnit.Meter && Task5(st).Value == 1.6m)
+        {
+            Console.WriteLine(("Zadanie 5: 1 punkt"));
             points++;
         }
-        Console.WriteLine($"Suma punktów: {points}");
+        else
+        {
+            Console.WriteLine(("Zadanie 5: 0 punkt"));
+        }*/
+
+        Console.WriteLine($"Suma punktów: {points}/5");
     }
 
-    internal class Complex
+    internal enum LengthUnit
     {
-        public double Re { get; set; }
-        public double Im { get; set; }
+        Millimeter = 1,
+        Meter = 1000,
+        Kilometer = 1000_000
+    }
 
-        public double Module()
-        {
-            return Math.Sqrt(Math.Pow(Re, 2) + Math.Pow(Im, 2));
-        }
+    internal class Length
+    {
+        public LengthUnit Unit { get; set; }
+        public decimal Value { get; set; }
+
         //Zadanie 1
-        //zdefiniuj operatory mnożenia liczby zespolonej przez wartość rzeczywistą typu double
+        //zdefiniuj operator mnożenia długości przez liczbę decimal, aly tylko dodatnią. Dla liczby ujemnej zgłoś wyjątek ArgumentException()
         //Przykład
-        //Complex result = new Complex(){ Re = 1, Im = 2} * 2d;
-        //Console.WriteLine(result);        // {Re = 2.0000, Im = 4.0000}
-        public static Complex operator *(Complex a, double factor)
-        { 
-            return (a * factor);
-        }
-        public static Complex operator *(double factor, Complex a)
+        //Lenght result = new Lenght(){Unit = LenghtUnit.Meter, Value = 2} * 2d;
+        //Console.WriteLine(result.Value);        // 4
+
+        /* public static Length Of(decimal x)
+         {
+             if (x<0)
+             {
+                 throw new ArgumentException();
+             }
+             else
+             {
+                 return new Length(x);
+             }
+         }*/
+        public static Length operator *(Length ln, decimal dm)
         {
-            return (factor * a);
+            if (dm < 0) throw new ArgumentException();
+            var newLn = new Length()
+            {
+                Unit = ln.Unit,
+                Value = ln.Value * dm,
+            };
+            return newLn;
         }
 
+        public static Length operator *(decimal dm, Length ln)
+        {
+            if (dm < 0) throw new ArgumentException();
+            var newLn = new Length()
+            {
+                Unit = ln.Unit,
+                Value = dm * ln.Value,
+            };
+            return newLn;
+        }
 
         //Zadanie 2
-        //Zdefiniuj operatory porównania dla klasy Complex
+        //Zdefiniuj relacji < i > dla klasy Lenght. Liczba większa to taka, która ma większość wartość po przeliczeniu na milimetry.
         //Przykłady
-        //bool IsEqual = new Complex(){Re = 1, Im = 2} == new Complex(){Re = 1, Im = 2}; //true
-        //bool IsEqual = new Complex(){Re = 1, Im = 2} == new Complex(){Re = 2, Im = 2}; //false
+        //bool IsLower = new Lenght(){Unit = LenghtUnit.Meter, Value = 2} < new Lenght(){Unit = LenghtUnit.Millmetre, Value = 4_000}; //true
+        //bool IsGreater = new Lenght(){Unit = LenghtUnit.Meter, Value = 2} > new Lenght(){Unit = LenghtUnit.Millmeter, Value = 400}; //true
 
-        public static bool operator ==(Complex complex, Complex complex1)
+        public static bool operator <(Length ln1, Length ln2)
         {
-            return complex.Equals(complex1);
+            ToMilimeters(ln1, ln2, out var value1, out var value2);
+
+            if (value1 < value2)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
         }
-        public static bool operator !=(Complex complex, Complex complex1)
+
+        public static bool operator >(Length ln1, Length ln2)
         {
-            return complex.Equals(complex1);
+            ToMilimeters(ln1, ln2, out var value1, out var value2);
+
+            if (value1 > value2)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
+
+        }
+
+        private static void ToMilimeters(Length ln1, Length ln2, out decimal value1, out decimal value2)
+        {
+            value1 = default(decimal);
+            value2 = default(decimal);
+            if (ln1.Unit != LengthUnit.Millimeter)
+            {
+                switch (ln1.Unit)
+                {
+                    case LengthUnit.Meter:
+                        value1 = ln1.Value * (decimal)LengthUnit.Meter;
+                        break;
+                    case LengthUnit.Kilometer:
+                        value1 = ln1.Value * (decimal)LengthUnit.Kilometer;
+                        break;
+                }
+            }
+            else value1 = ln1.Value;
+            if (ln2.Unit != LengthUnit.Millimeter)
+            {
+                switch (ln2.Unit)
+                {
+                    case LengthUnit.Meter:
+                        value2 = ln2.Value * (decimal)LengthUnit.Meter;
+                        break;
+                    case LengthUnit.Kilometer:
+                        value2 = ln2.Value * (decimal)LengthUnit.Kilometer;
+                        break;
+                }
+            }
+            else value2 = ln2.Value;
         }
 
         //Zadanie 3
-        //Zdefiniuj metodę ToString(), GetHashCode i Equals. Dwa liczby są sobie równe jeśli odpowiednio ich pola Re i Im są sobie równe
+        //Zdefiniuj metodę ToString(), GetHashCode i Equals. Dwie długości są sobie równe jeśli  po przeliczeniu na milimetry są identyczne
         //Przykład
-        //Console.Write(new Complex(){Re = 1, Im = 2}); //{ Re= 1.000000, Im = 2.00000}
-        //new Complex(){Re = 1, Im = 2}.Equals(new Complex(){Re = 1, Im = 2});  //true
-        //new Complex(){Re = 1, Im = 2}.Equals(new Complex(){Re = 2, Im = 2});  //false
+        //Console.Write(new Lenght(){Unit = LenghtUnit.Meter, Value = 2}); //{Unit = LenghtUnit.Meter, Value = 2}
+        //new Lenght(){Unit = LenghtUnit.Meter, Value = 200}.Equals(new Lenght(){Unit = LenghtUnit.Kilometer, Value = 0.2});  //true
 
+        public override string ToString()
+        {
+           return $"{{Unit = {LengthUnit.Meter}, Value = {Value}}}";
+        }
+        public override int GetHashCode()
+        {
+            return Unit.GetHashCode() ^ Value.GetHashCode();
+        }
 
+        public bool Equals(Length ln)
+        {
+            if (ReferenceEquals(null,ln))
+            {
+                return false;
+            }
+            else if(ReferenceEquals(this,ln))
+            {
+                return true;
+            }
+            else
+            {
+                return Value.Equals(ln.Value) && Unit.Equals(ln.Unit);
+            }
+        }
     }
+
     //Zadanie 4
-    //Zaimplementuj metodę, aby sortowała listę liczb zespolonowych w porządku rosnących modułów 
-    //Przykład
-    //
-    static void Task4(List<Complex> list)
+    //Zaimplementuj metodę, aby sortowała listę długości w porządku rosnącym, a dla identycznych długości (czyli takich, które po przeliczeniu na milimetry są identyczne)
+    //wg rosnacych jednostek w typie enum 
+    static void Task4(List<Length> list)
     {
-        list.OrderBy(x=>x.Im).ToList();
+        list.Sort((x,y) => x.Value.CompareTo(y.Value));
+    }
+
+    internal class Student
+    {
+        public Length Height { set; get; }
+        public int StudyYear { set; get; }
     }
 
     //Zadanie 5
-    //Zaimplementuj metodę, aby zwróciła IEnumerable modułów tych liczb, które mają dodatnie części rzeczywiste
-    static IEnumerable<double> Task5(IEnumerable<Complex> list)
+    //Zaimplementuj metodę za pomoca LINQ, aby wyznaczyła średnią wzrostu studentów pierwszego roku w postaci obiektu klasy
+    //Lenght z jednostką wysokość Meter. Studenci mogą mieć zapisaną wzrost w różnych jednostkach.
+    /*static Length Task5(IEnumerable<Student> list)
     {
-        IEnumerable<double> res = list.Select(x => Convert.ToDouble(x)).Where(x => Convert.ToDouble(x) > 0);
-
-        return res;
-        
-        
-        
-    }
-
+        IEnumerable<Length> enumerable = list.Select(x => x.Height);
+        decimal res;
+        return enu
+    }*/
 }
